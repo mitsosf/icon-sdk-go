@@ -2,10 +2,10 @@ package iconsdk
 
 import (
 	"bytes"
-	"crypto/sha3"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"golang.org/x/crypto/sha3"
 	"sort"
 	"strings"
 )
@@ -24,8 +24,7 @@ func serializeTransaction(data interface{}, hashed bool) (string, error) {
 		return "", err
 	}
 
-	// Perform custom serialization
-	result := "icx_sendTransaction." + valueTraverse(jsonData)
+	result := "icx_sendTransaction." + valueTraverse(jsonData, true)
 
 	if hashed {
 		// If hashed is true, hash the result string
@@ -37,7 +36,7 @@ func serializeTransaction(data interface{}, hashed bool) (string, error) {
 }
 
 // valueTraverse traverses the JSON data recursively, applying custom formatting.
-func valueTraverse(value interface{}) string {
+func valueTraverse(value interface{}, external bool) string {
 	switch v := value.(type) {
 	case map[string]interface{}:
 		var keys []string
@@ -47,21 +46,25 @@ func valueTraverse(value interface{}) string {
 		sort.Strings(keys) // Sort the keys for consistent ordering
 
 		var result bytes.Buffer
-		result.WriteString("{")
+		if !external {
+			result.WriteString("{")
+		}
 		for _, k := range keys {
 			result.WriteString(fmt.Sprintf("%s.", k))
-			result.WriteString(valueTraverse(v[k]))
+			result.WriteString(valueTraverse(v[k], false))
 			result.WriteString(".")
 		}
 		trimTrailingDot(&result)
-		result.WriteString("}")
+		if !external {
+			result.WriteString("}")
+		}
 		return result.String()
 
 	case []interface{}:
 		var result bytes.Buffer
 		result.WriteString("[")
 		for _, elem := range v {
-			result.WriteString(valueTraverse(elem))
+			result.WriteString(valueTraverse(elem, false))
 			result.WriteString(".")
 		}
 		trimTrailingDot(&result)
