@@ -86,9 +86,10 @@ func TestIconService(t *testing.T) {
 		url := "https://lisbon.net.solidwallet.io/api/v3"
 		iconService := NewIconService(&url)
 
+		privateKey := "f4ade1ff528c9e0bf10d35909e3486ef6ce88df8a183fc1cc2c65bfa9a53d3fd"
+		wallet := NewWallet(&privateKey)
 		result, err := iconService.SendTransaction(
-			"f4ade1ff528c9e0bf10d35909e3486ef6ce88df8a183fc1cc2c65bfa9a53d3fd",
-			"hxb14e0c751899676a1a4e655a34063b42260f844b",
+			*wallet,
 			"hxf8689d6c4c8f333651469fdea2ac59a18f6c2421",
 			"11.291182",
 			"0x3",
@@ -109,9 +110,10 @@ func TestIconService(t *testing.T) {
 		url := "https://lisbon.net.solidwallet.io/api/v3"
 		iconService := NewIconService(&url)
 
+		privateKey := "f4ade1ff528c9e0bf10d35909e3486ef6ce88df8a183fc1cc2c65bfa9a53d3fd"
+		wallet := NewWallet(&privateKey)
 		result, err := iconService.SendTransaction(
-			"f4ade1ff528c9e0bf10d35909e3486ef6ce88df8a183fc1cc2c65bfa9a53d3fd",
-			"hxb14e0c751899676a1a4e655a34063b42260f844b",
+			*wallet,
 			"hxf8689d6c4c8f333651469fdea2ac59a18f6c2421",
 			"0x1236451a23f80000",
 			"0x3",
@@ -132,9 +134,10 @@ func TestIconService(t *testing.T) {
 		url := "https://lisbon.net.solidwallet.io/api/v3"
 		iconService := NewIconService(&url)
 
+		privateKey := "f4ade1ff528c9e0bf10d35909e3486ef6ce88df8a183fc1cc2c65bfa9a53d3fd"
+		wallet := NewWallet(&privateKey)
 		result, err := iconService.SendTransactionWithMessage(
-			"f4ade1ff528c9e0bf10d35909e3486ef6ce88df8a183fc1cc2c65bfa9a53d3fd",
-			"hxb14e0c751899676a1a4e655a34063b42260f844b",
+			*wallet,
 			"hxf8689d6c4c8f333651469fdea2ac59a18f6c2421",
 			"0x1236451a23f80000",
 			"0x3",

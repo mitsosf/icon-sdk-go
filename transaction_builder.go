@@ -131,14 +131,14 @@ func (t *TransactionBuilder) Call(call_params map[string]interface{}) *Transacti
 	return t
 }
 
-func (t *TransactionBuilder) Sign(privateKey string) *TransactionBuilder {
+func (t *TransactionBuilder) Sign(wallet Wallet) *TransactionBuilder {
 	serializedTransaction, _ := serializeTransaction(t.transaction.data["params"], true)
 	serializedTransactionBytes, err := hex.DecodeString(serializedTransaction)
 	if err != nil {
 		log.Fatalf("Failed to decode serialized transaction: %v", err)
 	}
 
-	privateKeyBytes, err := hex.DecodeString(privateKey)
+	privateKeyBytes, err := hex.DecodeString(wallet.PrivateKey)
 	if err != nil {
 		log.Fatalf("Invalid private key: %v", err)
 	}

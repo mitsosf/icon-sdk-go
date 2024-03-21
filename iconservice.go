@@ -62,10 +62,10 @@ func (i *IconService) Call(score string, params map[string]interface{}) (map[str
 	return transaction.Send()
 }
 
-func (i *IconService) SendTransaction(privateKey string, from string, to string, value string, version string, nid string, nonce string, stepLimit string) (map[string]interface{}, error) {
+func (i *IconService) SendTransaction(wallet Wallet, to string, value string, version string, nid string, nonce string, stepLimit string) (map[string]interface{}, error) {
 	transaction := NewTransactionBuilder(i).
 		Method("icx_sendTransaction").
-		From(from).
+		From(wallet.PublicAddress).
 		To(to).
 		Value(value).
 		Version(version).
@@ -73,15 +73,15 @@ func (i *IconService) SendTransaction(privateKey string, from string, to string,
 		Timestamp().
 		Nonce(nonce).
 		StepLimit(stepLimit).
-		Sign(privateKey).
+		Sign(wallet).
 		Build()
 	return transaction.Send()
 }
 
-func (i *IconService) SendTransactionWithMessage(privateKey string, from string, to string, value string, version string, nid string, nonce string, stepLimit string, message string) (map[string]interface{}, error) {
+func (i *IconService) SendTransactionWithMessage(wallet Wallet, to string, value string, version string, nid string, nonce string, stepLimit string, message string) (map[string]interface{}, error) {
 	transaction := NewTransactionBuilder(i).
 		Method("icx_sendTransaction").
-		From(from).
+		From(wallet.PublicAddress).
 		To(to).
 		Value(value).
 		Version(version).
@@ -90,7 +90,7 @@ func (i *IconService) SendTransactionWithMessage(privateKey string, from string,
 		Nonce(nonce).
 		StepLimit(stepLimit).
 		Message(message).
-		Sign(privateKey).
+		Sign(wallet).
 		Build()
 	return transaction.Send()
 }
