@@ -63,7 +63,7 @@ func (t *Transaction) Send() (map[string]interface{}, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		bodyText, _ := ioutil.ReadAll(resp.Body) // Ignoring error on purpose for simplicity
+		bodyText, _ := ioutil.ReadAll(resp.Body)
 		return nil, fmt.Errorf("unexpected response status: %s, body: %s", resp.Status, string(bodyText))
 	}
 

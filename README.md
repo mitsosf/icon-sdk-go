@@ -32,9 +32,29 @@ go test
 
 Usage
 --------
-### TODO
+```go
+import (
+    "fmt"
+    "github.com/mitsosf/icon-sdk-go"
+)
 
-Coming soon
---------
-- Documentation examples - see the tests for now
-- IRC2 token support
+iconservice := iconsdk.NewIconService(nil)
+res, err := iconservice.GetBalance("<address>")
+if err != nil {
+    fmt.Println(err)
+    return
+}
+fmt.Println(res)
+	
+// In case you want to initalize IconService on a testnet
+iconServiceUrl := "https://lisbon.net.solidwallet.io/api/v3"
+iconservice := iconsdk.NewIconService(&iconServiceUrl)
+
+// Creating or loading a wallet
+wallet := iconsdk.NewWallet(nil)
+privateKey := "01234..."
+wallet := iconsdk.NewWallet(&privateKey)
+
+// IRC2
+irc2 = iconsdk.NewIRC2("cx123...", *iconservice)
+```
