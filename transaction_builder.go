@@ -114,7 +114,6 @@ func (t *TransactionBuilder) Timestamp() *TransactionBuilder {
 }
 
 func (t *TransactionBuilder) Message(message string) *TransactionBuilder {
-	// Timestamp in microseconds, then convert to hex
 	params := make(map[string]interface{})
 	params["dataType"] = "message"
 	params["data"] = "0x" + hex.EncodeToString([]byte(message))
@@ -123,7 +122,6 @@ func (t *TransactionBuilder) Message(message string) *TransactionBuilder {
 }
 
 func (t *TransactionBuilder) Call(call_params map[string]interface{}) *TransactionBuilder {
-	// Timestamp in microseconds, then convert to hex
 	params := make(map[string]interface{})
 	params["dataType"] = "call"
 	params["data"] = call_params
@@ -143,15 +141,11 @@ func (t *TransactionBuilder) Sign(wallet Wallet) *TransactionBuilder {
 		log.Fatalf("Invalid private key: %v", err)
 	}
 
-	// Sign the transaction
 	sig, err := secp256k1.Sign(serializedTransactionBytes, privateKeyBytes)
 	if err != nil {
 		log.Fatalf("Failed to sign transaction: %v", err)
 	}
 
-	// Optionally, append recovery ID if needed, similar to Rust's implementation
-
-	// Encode the signature in Base64
 	signatureBase64 := base64.StdEncoding.EncodeToString(sig)
 
 	params := make(map[string]interface{})

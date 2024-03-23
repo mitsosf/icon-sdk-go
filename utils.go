@@ -17,17 +17,14 @@ func icxToHex(value string, decimals *int) string {
 		return ""
 	}
 
-	// Scale the value according to the specified decimals
 	multiplier := new(big.Float).SetFloat64(float64(1))
 	for i := 0; i < *decimals; i++ {
 		multiplier.Mul(multiplier, big.NewFloat(10))
 	}
 	val.Mul(val, multiplier)
 
-	// Convert the scaled value to an integer
 	valInt, _ := val.Int(nil) // This truncates the decimal part
 
-	// Convert the integer to a hexadecimal string
 	hexStr := "0x" + valInt.Text(16)
 
 	return hexStr
@@ -63,7 +60,6 @@ func hexToIcx(value string, decimals *int) string {
 }
 
 func trimTrailingZeros(s string) string {
-	// Remove trailing zeros
 	s = strings.TrimRight(s, "0")
 	// Ensure there's a digit after the decimal point
 	if s[len(s)-1] == '.' {

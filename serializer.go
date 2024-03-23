@@ -10,15 +10,12 @@ import (
 	"strings"
 )
 
-// serializeTransaction serializes JSON data with custom formatting and optionally hashes it.
 func serializeTransaction(data interface{}, hashed bool) (string, error) {
-	// Marshal the data into JSON bytes
 	jsonBytes, err := json.Marshal(data)
 	if err != nil {
 		return "", err
 	}
 
-	// Unmarshal into a generic interface for manual traversal
 	var jsonData interface{}
 	if err := json.Unmarshal(jsonBytes, &jsonData); err != nil {
 		return "", err
@@ -27,7 +24,6 @@ func serializeTransaction(data interface{}, hashed bool) (string, error) {
 	result := "icx_sendTransaction." + valueTraverse(jsonData, true)
 
 	if hashed {
-		// If hashed is true, hash the result string
 		hash := sha3.New256()
 		hash.Write([]byte(result))
 		return hex.EncodeToString(hash.Sum(nil)), nil
@@ -35,7 +31,6 @@ func serializeTransaction(data interface{}, hashed bool) (string, error) {
 	return result, nil
 }
 
-// valueTraverse traverses the JSON data recursively, applying custom formatting.
 func valueTraverse(value interface{}, external bool) string {
 	switch v := value.(type) {
 	case map[string]interface{}:
@@ -43,7 +38,7 @@ func valueTraverse(value interface{}, external bool) string {
 		for k := range v {
 			keys = append(keys, k)
 		}
-		sort.Strings(keys) // Sort the keys for consistent ordering
+		sort.Strings(keys)
 
 		var result bytes.Buffer
 		if !external {
@@ -88,14 +83,12 @@ func valueTraverse(value interface{}, external bool) string {
 	}
 }
 
-// trimTrailingDot removes a trailing dot from the buffer.
 func trimTrailingDot(buf *bytes.Buffer) {
 	if buf.Len() > 0 && buf.Bytes()[buf.Len()-1] == '.' {
 		buf.Truncate(buf.Len() - 1)
 	}
 }
 
-// escapeString applies custom escaping rules to a string.
 func escapeString(value string) string {
 	replacer := strings.NewReplacer("\\", "\\\\", ".", "\\.", "{", "\\{", "}", "\\}", "[", "\\[", "]", "\\]")
 	return replacer.Replace(value)
