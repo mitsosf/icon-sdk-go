@@ -9,62 +9,62 @@ import (
 func TestIconService(t *testing.T) {
 	t.Run("Get last block", func(t *testing.T) {
 		iconService := NewIconService(nil)
-		block, err := iconService.GetLastBlock()
+		res, err := iconService.GetLastBlock()
 		if err != nil {
 			fmt.Println(err)
-			assert.NotNil(t, block)
+			assert.NotNil(t, res)
 			return
 		}
-		fmt.Println(block)
-		assert.Equal(t, "2.0", block["jsonrpc"])
+		fmt.Println(res)
+		assert.Equal(t, "2.0", res["jsonrpc"])
 	})
 
 	t.Run("Get block by height", func(t *testing.T) {
 		iconService := NewIconService(nil)
-		block, err := iconService.GetBlockByHeight("0x0")
+		res, err := iconService.GetBlockByHeight("0x0")
 		if err != nil {
 			fmt.Println(err)
-			assert.NotNil(t, block)
+			assert.NotNil(t, res)
 			return
 		}
-		fmt.Println(block)
-		assert.Equal(t, "2.0", block["jsonrpc"])
+		fmt.Println(res)
+		assert.Equal(t, "2.0", res["jsonrpc"])
 	})
 
 	t.Run("Get block by hash", func(t *testing.T) {
 		iconService := NewIconService(nil)
-		block, err := iconService.GetBlockByHash("0xcf43b3fd45981431a0e64f79d07bfcf703e064b73b802c5f32834eec72142190")
+		res, err := iconService.GetBlockByHash("0xcf43b3fd45981431a0e64f79d07bfcf703e064b73b802c5f32834eec72142190")
 		if err != nil {
 			fmt.Println(err)
-			assert.NotNil(t, block)
+			assert.NotNil(t, res)
 			return
 		}
-		fmt.Println(block)
-		assert.Equal(t, "2.0", block["jsonrpc"])
+		fmt.Println(res)
+		assert.Equal(t, "2.0", res["jsonrpc"])
 	})
 
 	t.Run("Get balance", func(t *testing.T) {
 		iconService := NewIconService(nil)
-		block, err := iconService.GetBalance("hxd5ace539bf910635c2fa0e9c185d2d3c8d52c4cc")
+		res, err := iconService.GetBalance("hxd5ace539bf910635c2fa0e9c185d2d3c8d52c4cc")
 		if err != nil {
 			fmt.Println(err)
-			assert.NotNil(t, block)
+			assert.NotNil(t, res)
 			return
 		}
-		fmt.Println(block)
-		assert.Equal(t, "2.0", block["jsonrpc"])
+		fmt.Println(res)
+		assert.Equal(t, "2.0", res["jsonrpc"])
 	})
 
 	t.Run("Get transaction result", func(t *testing.T) {
 		iconService := NewIconService(nil)
-		block, err := iconService.GetTransactionResult("0x1b6133792cee1ab2e54ae68faf9f49daf81c7e46d68b1ca281acc718602c77dd")
+		res, err := iconService.GetTransactionResult("0x1b6133792cee1ab2e54ae68faf9f49daf81c7e46d68b1ca281acc718602c77dd")
 		if err != nil {
 			fmt.Println(err)
-			assert.NotNil(t, block)
+			assert.NotNil(t, res)
 			return
 		}
-		fmt.Println(block)
-		assert.Equal(t, "2.0", block["jsonrpc"])
+		fmt.Println(res)
+		assert.Equal(t, "2.0", res["jsonrpc"])
 	})
 
 	t.Run("Call", func(t *testing.T) {
@@ -72,14 +72,14 @@ func TestIconService(t *testing.T) {
 		params := make(map[string]interface{})
 		params["method"] = "balanceOf"
 		params["params"] = map[string]interface{}{"_owner": "hx70e8eeb5d23ab18a828ec95f769db6d953e5f0fd"}
-		block, err := iconService.Call("cx9ab3078e72c8d9017194d17b34b1a47b661945ca", params)
+		res, err := iconService.Call("cx9ab3078e72c8d9017194d17b34b1a47b661945ca", params)
 		if err != nil {
 			fmt.Println(err)
-			assert.NotNil(t, block)
+			assert.NotNil(t, res)
 			return
 		}
-		fmt.Println(block)
-		assert.Equal(t, "2.0", block["jsonrpc"])
+		fmt.Println(res)
+		assert.Equal(t, "2.0", res["jsonrpc"])
 	})
 
 	t.Run("Send transaction", func(t *testing.T) {
